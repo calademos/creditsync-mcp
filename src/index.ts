@@ -23,7 +23,7 @@ const server = new McpServer({
 
 server.tool(
   "list_benefits",
-  "List all tracked credit card benefits with current period status, amounts, and expiry dates. Filter by status (unused/partial/used), card nickname, or expiring within N days.",
+  "List all tracked credit card benefits with current period status, amounts, and expiry dates. This includes statement credits, free night certificates, companion certs, lounge passes, and all other card-linked benefits. For standalone items NOT tied to a card (gift cards, vouchers, travel credits), use list_rewards instead. Filter by status (unused/partial/used), card nickname, or expiring within N days.",
   {
     status: z.enum(["unused", "partial", "used"]).optional().describe("Filter by usage status"),
     card: z.string().optional().describe("Filter by card nickname (partial match)"),
@@ -570,7 +570,7 @@ server.tool(
 
 server.tool(
   "list_rewards",
-  "List credits and certificates — gift cards, travel credits, vouchers, free night certificates, companion certs, and other rewards not tied to a specific card benefit. Filter by type or status.",
+  "List standalone rewards NOT tied to a card — gift cards, travel vouchers, airline credits, coupons, and other items the user added manually. These are separate from card-linked benefits (use list_benefits for free night certificates, companion certs, statement credits, and other benefits that come from a card). Filter by type or status.",
   {
     status: z.enum(["active", "used", "expired", "all"]).optional().describe("Filter by status (default: active)"),
     type: z.string().optional().describe("Filter by type: gift_card, travel_credit, voucher, lounge_pass, free_night, companion_cert, milestone, coupon, other"),
@@ -591,7 +591,7 @@ server.tool(
 
 server.tool(
   "add_reward",
-  "Track the existence of a credit, certificate, or reward — gift cards, travel credits, vouchers, companion certs, etc. This is a reminder system, not a vault. Do not store card numbers, PINs, or redemption codes. Items with expiration dates automatically appear in the calendar feed.",
+  "Track a standalone reward NOT tied to a card — gift cards, travel vouchers, airline credits, coupons, retention offers. Use this for items the user received outside the card benefit system (e.g., AA flight credit from a cancellation, hotel gift card from a retention call). Do NOT use this for benefits that come from a card (free nights, statement credits) — those are already tracked via list_benefits. Do not store card numbers, PINs, or redemption codes. Items with expiration dates automatically appear in the calendar feed.",
   {
     name: z.string().describe("Reward name (e.g., 'Hilton $50 gift card', 'AA travel voucher')"),
     type: z.enum(["gift_card", "travel_credit", "voucher", "lounge_pass", "free_night", "companion_cert", "milestone", "coupon", "other"]).optional().describe("Reward type (default: other)"),

@@ -566,6 +566,101 @@ server.tool(
   },
 );
 
+// ─── list_rewards ─────────────────────────────────
+
+server.tool(
+  "list_rewards",
+  "List credits and certificates — gift cards, travel credits, vouchers, free night certificates, companion certs, and other rewards not tied to a specific card benefit. Filter by type or status.",
+  {
+    status: z.enum(["active", "used", "expired", "all"]).optional().describe("Filter by status (default: active)"),
+    type: z.string().optional().describe("Filter by type: gift_card, travel_credit, voucher, lounge_pass, free_night, companion_cert, milestone, coupon, other"),
+    expiring_within_days: z.number().int().positive().optional().describe("Only return rewards expiring within this many days"),
+  },
+  async ({ status, type, expiring_within_days }) => {
+    const params: Record<string, string> = {};
+    if (status) params.status = status;
+    if (type) params.type = type;
+    if (expiring_within_days) params.expiring_within_days = String(expiring_within_days);
+
+    const data = await client.get("/api/v1/rewards", params);
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  },
+);
+
+// ─── add_reward ───────────────────────────────────
+
+server.tool(
+  "add_reward",
+  "Track the existence of a credit, certificate, or reward — gift cards, travel credits, vouchers, companion certs, etc. This is a reminder system, not a vault. Do not store card numbers, PINs, or redemption codes. Items with expiration dates automatically appear in the calendar feed.",
+  {
+    name: z.string().describe("Reward name (e.g., 'Hilton $50 gift card', 'AA travel voucher')"),
+    type: z.enum(["gift_card", "travel_credit", "voucher", "lounge_pass", "free_night", "companion_cert", "milestone", "coupon", "other"]).optional().describe("Reward type (default: other)"),
+    value: z.number().optional().describe("Dollar value if applicable"),
+    currency: z.string().optional().describe("Currency type (default: dollars)"),
+    expiration_date: z.string().optional().describe("Expiration date in YYYY-MM-DD format. Generates calendar reminders at 90, 30, 7 days before and on expiration day."),
+    source: z.string().optional().describe("Where the reward came from (e.g., 'retention call', 'welcome bonus', 'amex offer')"),
+    notes: z.string().optional().describe("Additional notes. Do NOT store card numbers or PINs."),
+    owner: z.string().optional().describe("Owner name"),
+  },
+  async ({ name, type, value, currency, expiration_date, source, notes, owner }) => {
+    const body: Record<string, unknown> = { name };
+    if (type) body.type = type;
+    if (value !== undefined) body.value = value;
+    if (currency) body.currency = currency;
+    if (expiration_date) body.expiration_date = expiration_date;
+    if (source) body.source = source;
+    if (notes) body.notes = notes;
+    if (owner) body.owner = owner;
+
+    const data = await client.post("/api/v1/rewards", body);
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  },
+);
+
+// ─── update_reward ────────────────────────────────
+
+server.tool(
+  "update_reward",
+  "Update a reward's details or mark it as used. Set status to 'used' when the reward has been redeemed.",
+  {
+    reward_id: z.string().describe("The reward ID to update"),
+    name: z.string().optional().describe("Update reward name"),
+    type: z.string().optional().describe("Update type"),
+    value: z.number().optional().describe("Update dollar value"),
+    expiration_date: z.string().optional().describe("Update expiration date (YYYY-MM-DD)"),
+    source: z.string().optional().describe("Update source"),
+    notes: z.string().optional().describe("Update notes"),
+    status: z.enum(["active", "used", "expired"]).optional().describe("Set status — use 'used' when redeemed"),
+  },
+  async ({ reward_id, name, type, value, expiration_date, source, notes, status }) => {
+    const body: Record<string, unknown> = {};
+    if (name !== undefined) body.name = name;
+    if (type !== undefined) body.type = type;
+    if (value !== undefined) body.value = value;
+    if (expiration_date !== undefined) body.expiration_date = expiration_date;
+    if (source !== undefined) body.source = source;
+    if (notes !== undefined) body.notes = notes;
+    if (status !== undefined) body.status = status;
+
+    const data = await client.patch(`/api/v1/rewards/${reward_id}`, body);
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  },
+);
+
+// ─── remove_reward ────────────────────────────────
+
+server.tool(
+  "remove_reward",
+  "Delete a reward permanently. Use when the reward was added by mistake or is no longer relevant.",
+  {
+    reward_id: z.string().describe("The reward ID to remove"),
+  },
+  async ({ reward_id }) => {
+    const data = await client.delete(`/api/v1/rewards/${reward_id}`);
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  },
+);
+
 // ─── Start server ──────────────────────────────────
 
 async function main() {

@@ -1,7 +1,7 @@
 {
   "name": "@creditsync-pro/mcp",
-  "version": "1.11.1",
-  "description": "CreditSync MCP server for Claude Desktop — track credit card benefits, monitor ROI, and optimize your card portfolio through natural conversation.",
+  "version": "1.12.0",
+  "description": "CreditSync MCP server for Claude Desktop",
   "type": "module",
   "bin": {
     "creditsync-mcp": "dist/index.js",
@@ -11,20 +11,6 @@
     "build": "tsc",
     "start": "node dist/index.js"
   },
-  "keywords": [
-    "mcp",
-    "claude",
-    "credit-cards",
-    "benefits",
-    "rewards",
-    "loyalty-programs"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/creditsync-pro/creditsync-mcp.git"
-  },
-  "homepage": "https://www.creditsync.pro/byoa",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
     "zod": "^3.24.4"

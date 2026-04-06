@@ -1,0 +1,43 @@
+{
+  "manifest_version": "0.3",
+  "name": "creditsync",
+  "version": "1.11.1",
+  "description": "Track credit card benefits, monitor ROI, and optimize your card portfolio through natural conversation. 27 tools for benefits, cards, loyalty programs, welcome offers, wallet optimization, and Chase 5/24 eligibility.",
+  "author": {
+    "name": "CreditSync Pro",
+    "url": "https://www.creditsync.pro"
+  },
+  "privacy_policies": [
+    "https://www.creditsync.pro/privacy"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"]
+    }
+  },
+  "environment_variables": [
+    {
+      "name": "CREDITSYNC_API_KEY",
+      "description": "Your CreditSync Pro API key (starts with cs_). Create one at Settings > API in CreditSync.",
+      "required": true,
+      "secret": true
+    },
+    {
+      "name": "CREDITSYNC_API_URL",
+      "description": "API base URL (defaults to https://www.creditsync.pro)",
+      "required": false,
+      "secret": false
+    }
+  ],
+  "tools": [
+    "list_benefits", "get_benefit", "mark_benefit_used", "create_benefit", "update_benefit", "archive_benefit",
+    "list_cards", "get_card", "create_card", "archive_card", "update_card", "search_catalog",
+    "get_dashboard", "get_action_items", "get_calendar_events", "get_best_card",
+    "list_programs", "update_balance", "get_transfer_partners", "get_earn_rates",
+    "create_welcome_offer", "update_welcome_offer", "list_welcome_offers",
+    "log_retention_offer", "get_524_status", "add_external_card", "remove_external_card"
+  ]
+}

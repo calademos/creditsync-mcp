@@ -28,7 +28,7 @@ MCP server for connecting Claude Desktop to your CreditSync account. Requires a 
 
 | Tool | Description |
 |------|-------------|
-| `list_benefits` | List all tracked benefits with status, amounts, expiry dates |
+| `list_benefits` | List card-linked benefits (statement credits, free nights, companion certs, lounge passes). For standalone items, use `list_rewards` |
 | `get_benefit` | Get detailed info for a specific benefit with all periods |
 | `mark_benefit_used` | Mark a benefit as used, partial, or unused |
 | `get_dashboard` | Dashboard metrics: expiring, captured, available, ROI |
@@ -55,8 +55,8 @@ MCP server for connecting Claude Desktop to your CreditSync account. Requires a 
 | `archive_benefit` | Archive a benefit (soft delete, preserves history) |
 | `add_external_card` | Add a non-catalog card for 5/24 tracking |
 | `remove_external_card` | Remove an external card from 5/24 tracking |
-| `list_rewards` | List credits & certificates (gift cards, vouchers, travel credits) |
-| `add_reward` | Track a reward — existence only, no card numbers or PINs |
+| `list_rewards` | List standalone rewards NOT tied to a card (gift cards, vouchers, airline credits). Separate from card-linked `list_benefits` |
+| `add_reward` | Track a standalone reward (not from a card). No card numbers or PINs — existence only |
 | `update_reward` | Update reward details or mark as used |
 | `remove_reward` | Delete a reward permanently |
 

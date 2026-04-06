@@ -515,7 +515,7 @@ server.tool(
 
 server.tool(
   "add_external_card",
-  "Add a card that is NOT in the CreditSync catalog for application eligibility tracking (5/24, 5/90). Use this for cards the user holds that CreditSync does not track benefits for (e.g., store cards, non-premium cards). Business cards are automatically excluded from Chase 5/24 count but still tracked for reference. Always set is_business correctly — it affects eligibility calculations.",
+  "Add a card that is NOT in the CreditSync catalog for application eligibility tracking (Chase 5/24, Amex 2/90). Use this for cards the user holds that CreditSync does not track benefits for (e.g., store cards, non-premium cards). Business cards are automatically excluded from Chase 5/24 count but still tracked for reference. Always set is_business correctly — it affects eligibility calculations.",
   {
     card_name: z.string().describe("Card name (e.g., 'Chase Amazon Visa', 'Apple Card')"),
     open_date: z.string().describe("Date the card was opened, YYYY-MM-DD format"),

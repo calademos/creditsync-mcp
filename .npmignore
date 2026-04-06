@@ -1,0 +1,4 @@
+src/
+*.mcpb
+manifest.json
+.DS_Store

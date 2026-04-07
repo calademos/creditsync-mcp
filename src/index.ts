@@ -105,7 +105,7 @@ server.tool(
 
 server.tool(
   "list_cards",
-  "List all credit cards with issuer, annual fee, renewal month, owner, last 4 digits, and benefit count. Use last_four to match cards against external sources (statements, Gmail, Plaid).",
+  "List all credit cards with issuer (co-brand/marketing label), issuing_bank (actual bank that issues the card — use for application rule logic), annual fee, renewal month, owner, last 4 digits, and benefit count. Note: issuer and issuing_bank can differ for co-branded cards (e.g., Hilton Aspire has issuer=Hilton, issuing_bank=Amex). Use last_four to match cards against external sources (statements, Gmail, Plaid).",
   {},
   async () => {
     const data = await client.get("/api/v1/cards");

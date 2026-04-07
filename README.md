@@ -32,7 +32,7 @@ MCP server for connecting Claude Desktop to your CreditSync account. Requires a 
 | `get_benefit` | Get detailed info for a specific benefit with all periods |
 | `mark_benefit_used` | Mark a benefit as used, partial, or unused |
 | `get_dashboard` | Dashboard metrics: expiring, captured, available, ROI |
-| `list_cards` | List all cards with fees, renewal months, last 4 digits, benefit counts |
+| `list_cards` | List all cards with issuer, issuing_bank, fees, renewal months, last 4 digits, benefit counts |
 | `get_card` | Get a single card's full picture: benefits, ROI, renewal, value at risk |
 | `get_action_items` | Prioritized action items: expiring, missed, renewals, negative ROI |
 | `get_calendar_events` | Structured calendar events for deadlines, resets, fees, availability |

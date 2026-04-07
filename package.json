@@ -1,6 +1,6 @@
 {
   "name": "@creditsync-pro/mcp",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "CreditSync MCP server for Claude Desktop",
   "type": "module",
   "bin": {
